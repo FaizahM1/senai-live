@@ -22,32 +22,30 @@ export default function SenAI() {
   ]);
   const [chatInput, setChatInput] = useState("");
   const [chatLoading, setChatLoading] = useState(false);
+const analyzeMessage = async () => {
+  if (!message.trim()) return;
+  setLoading(true);
 
-  const analyzeMessage = async () => {
-    if (!message.trim()) return;
-    setLoading(true);
+  try {
+    const API_URL =
+      window.location.hostname === "localhost"
+        ? "http://localhost:8000/analyze"
+        : "https://senai-backend.onrender.com/analyze";
 
-    try {
-      const response = await fetch("http://localhost:8000/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: message }),
-      });
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: message }),
+    });
 
-      const data = await response.json();
-
-      setResult({
-        verdict: data.verdict, // SAFE | SUSPICIOUS | SCAM
-        confidence: data.confidence, // 0–100 from backend
-        reason: data.reason,
-        triggered: data.triggered_rules || [],
-      });
-    } catch {
-      alert("backend unreachable. start fastapi.");
-    }
-
+    const data = await response.json();
+    setResult(data);
+  } catch (error) {
+    alert("AI backend is currently offline.");
+  } finally {
     setLoading(false);
-  };
+  }
+};
 
   const speakResult = () => {
     if (!result) return;
