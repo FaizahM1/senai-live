@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html {
+  font-family: Inter, sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-gray-900 transition-colors duration-300;
+}
+
+.dark body {
+  @apply bg-gray-900 text-white;
+}
+.card {
+  @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700
+         shadow-lg rounded-2xl p-6 transition;
+}
+
+textarea, input {
+  @apply w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 
+         rounded-xl p-4 outline-none;
+}
+
+.btn-primary {
+  @apply bg-gradient-to-r from-blue-600 to-purple-600 
+         text-white rounded-xl py-3 font-semibold
+         hover:opacity-90 transition;
+}
+
+.backdrop {
+  @apply fixed inset-0 bg-black/40 flex items-center justify-center z-50;
+}
